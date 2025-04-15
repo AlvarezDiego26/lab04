@@ -50,7 +50,14 @@ fun PantallaPrincipal() {
                 value = texto,
                 onValueChange = { texto = it },
                 label = { Text("Ingresa tu nombre") },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp), // Agregado padding
+                textStyle = TextStyle(fontSize = 18.sp, color = Color.Blue), // Cambiar el color y tamaño de texto
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    focusedBorderColor = Color.Green, // Borde verde cuando está enfocado
+                    unfocusedBorderColor = Color.Gray // Borde gris cuando no está enfocado
+                )
             )
 
             Spacer(modifier = Modifier.height(16.dp))

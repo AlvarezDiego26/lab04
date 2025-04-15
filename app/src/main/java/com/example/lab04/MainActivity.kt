@@ -4,13 +4,17 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.lab04.ui.theme.Lab04Theme
 
 class MainActivity : ComponentActivity() {
@@ -19,10 +23,48 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             Lab04Theme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
+                PantallaPrincipal()
+            }
+        }
+    }
+}
+
+@Composable
+fun PantallaPrincipal() {
+    var texto by remember { mutableStateOf("") }
+
+    Scaffold(
+        floatingActionButton = {
+            FloatingActionButton(onClick = { texto = "" }) {
+                Icon(Icons.Default.Add, contentDescription = "Agregar")
+            }
+        },
+        modifier = Modifier.fillMaxSize()
+    ) { paddingValues ->
+        Column(modifier = Modifier
+            .padding(paddingValues)
+            .padding(16.dp)) {
+
+            // OutlinedTextField
+            OutlinedTextField(
+                value = texto,
+                onValueChange = { texto = it },
+                label = { Text("Ingresa tu nombre") },
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // LazyColumn
+            val elementos = listOf("Elemento 1", "Elemento 2", "Elemento 3", "Elemento 4")
+            LazyColumn {
+                items(elementos) { item ->
+                    Text(
+                        text = "$item - $texto",
+                        fontSize = 18.sp,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 8.dp)
                     )
                 }
             }
@@ -30,18 +72,10 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun PreviewPantalla() {
     Lab04Theme {
-        Greeting("Android")
+        PantallaPrincipal()
     }
 }
